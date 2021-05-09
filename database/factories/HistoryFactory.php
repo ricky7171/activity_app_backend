@@ -24,8 +24,8 @@ class HistoryFactory extends Factory
     {
         return [
             'activity_id' => mt_rand(0,3),
-            'date' => Carbon::now()->format('d-M-Y'),
-            'time' => Carbon::now()->format('H:i:s'),
+            'date' => $this->faker->date("Y-m-d", 'now'),
+            'time' => $this->faker->date("H:i:s", 'now'),
             'value' => mt_rand(50,100)
         ];
     }
