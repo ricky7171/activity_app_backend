@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\History;
 use App\Http\Requests\StoreHistory;
 use App\Http\Requests\UpdateHistory;
+use App\Http\Requests\SearchHistory;
 use App\Services\Contracts\HistoryServiceContract as HistoryService;
 use App\Exceptions\GetDataFailedException;
 use App\Exceptions\StoreDataFailedException;
 use App\Exceptions\UpdateDataFailedException;
 use App\Exceptions\DeleteDataFailedException;
+use App\Exceptions\SearchDataFailedException;
 
 class HistoryController extends Controller
 {
@@ -32,6 +34,7 @@ class HistoryController extends Controller
             $response = ['error' => false, 'data'=>$data];
             return response()->json($response);
         } catch (\Throwable $th) {
+            dd($th);
             throw new GetDataFailedException('Get Data Failed : Undefined Error');
         }
         
@@ -93,5 +96,17 @@ class HistoryController extends Controller
             throw new DeleteDataFailedException('Delete Data Failed : Undefined Error');
         }
         
+    }
+
+    public function search(SearchHistory $request) {
+        try {
+            $data = $request->validated();
+            $result = $this->historyService->search($data);
+            $response = ['error' => false, 'data'=> $result];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            dd($th);
+            throw new SearchDataFailedException('Search Data Failed : Undefined Error');
+        }
     }
 }
