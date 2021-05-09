@@ -10,5 +10,7 @@ interface ActivityServiceContract {
     public function update($input, $id);
 
     public function delete($id);
+
+    public function search($fields);
     
 }

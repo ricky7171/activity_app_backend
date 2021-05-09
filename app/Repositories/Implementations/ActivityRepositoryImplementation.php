@@ -10,4 +10,13 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
     {
         $this->builder = $builder;
     }
+
+    public function search($fields) {
+        $result = \App\Models\Activity::orWhere(function($query) use ($fields) {
+            foreach ($fields as $key => $value) {
+                $query->orWhere($key, 'like', "%" . $value . "%");
+            }
+        })->get();
+        return $result;
+    }
 }

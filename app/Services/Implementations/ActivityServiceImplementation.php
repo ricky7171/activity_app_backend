@@ -27,4 +27,8 @@ class ActivityServiceImplementation implements ActivityServiceContract {
     public function delete($id) {
         return $this->activityRepo->delete($id);
     }
+
+    public function search($fields) {
+        return $this->activityRepo->search($fields);
+    }
 }

@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Http\Requests\StoreActivity;
 use App\Http\Requests\UpdateActivity;
+use App\Http\Requests\SearchActivity;
 use App\Services\Contracts\ActivityServiceContract as ActivityService;
 use App\Exceptions\GetDataFailedException;
 use App\Exceptions\StoreDataFailedException;
 use App\Exceptions\UpdateDataFailedException;
-use App\Exceptions\DeleteDataFailedException;
+use App\Exceptions\SearchDataFailedException;
 
 class ActivityController extends Controller
 {
@@ -93,5 +94,16 @@ class ActivityController extends Controller
             throw new DeleteDataFailedException('Delete Data Failed : Undefined Error');
         }
         
+    }
+
+    public function search(SearchActivity $request) {
+        try {
+            $data = $request->validated();
+            $result = $this->activityService->search($data);
+            $response = ['error' => false, 'data'=> $result];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw new SearchDataFailedException('Search Data Failed : Undefined Error');
+        }
     }
 }
