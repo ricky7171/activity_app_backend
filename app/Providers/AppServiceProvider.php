@@ -23,6 +23,26 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+
+        // DB::listen(function ($query) {
+        //     error_log($query->sql);
+            
+        // });
+
+        $models = [
+            'Activity',
+            'History',
+        ];
+
+        //binding repository
+        foreach ($models as $model) {
+            $this->app->singleton("App\Repositories\Contracts\\{$model}RepositoryContract", "App\Repositories\Implementations\\{$model}RepositoryImplementation");
+        }
+
+        //binding services
+        foreach ($models as $model) {
+            $this->app->singleton("App\Services\Contracts\\{$model}ServiceContract", "App\Services\Implementations\\{$model}ServiceImplementation");
+        }
     }
 }
