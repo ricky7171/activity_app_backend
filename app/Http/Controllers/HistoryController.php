@@ -2,29 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\History;
 use Illuminate\Http\Request;
+use App\Models\History;
+use App\Http\Requests\StoreHistory;
+use App\Http\Requests\UpdateHistory;
+use App\Services\Contracts\HistoryServiceContract as HistoryService;
+use App\Exceptions\GetDataFailedException;
+use App\Exceptions\StoreDataFailedException;
+use App\Exceptions\UpdateDataFailedException;
+use App\Exceptions\DeleteDataFailedException;
 
 class HistoryController extends Controller
 {
+    private $historyService;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(HistoryService $historyService)
+    {
+        $this->historyService = $historyService;
+    }
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        try {
+            $data = $this->historyService->get();
+            $response = ['error' => false, 'data'=>$data];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw new GetDataFailedException('Get Data Failed : Undefined Error');
+        }
+        
     }
 
     /**
@@ -33,53 +43,55 @@ class HistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreHistory $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function show(History $history)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(History $history)
-    {
-        //
+        try {
+            $data = $request->validated();
+            $this->historyService->store($data);    
+            $response = ['error' => false, 'message'=>'create data success !'];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw new StoreDataFailedException('Store Data Failed : Undefined Error');
+        }
+        
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\History  $history
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, History $history)
+    public function update(UpdateHistory $request, History $history)
     {
-        //
+        try {
+            $data = $request->validated();
+            $this->historyService->update($data, $history->id);
+            $response = ['error' => false, 'message'=>'update data success !'];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw new UpdateDataFailedException('Update Data Failed : Undefined Error');
+        }
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\History  $history
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(History $history)
     {
-        //
+        try {
+            $this->historyService->delete($history->id);
+            $response = ['error' => false, 'message'=>'delete data success !'];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw new DeleteDataFailedException('Delete Data Failed : Undefined Error');
+        }
+        
     }
 }
