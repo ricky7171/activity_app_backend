@@ -18,6 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/activities/search', 'ActivityController@search');
+
+Route::post('/histories/search', 'HistoryController@search');
+
 Route::resource('activities', 'ActivityController')->except([
     'create', 'show'
 ]);
