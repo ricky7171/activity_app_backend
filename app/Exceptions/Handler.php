@@ -80,6 +80,9 @@ class Handler extends ExceptionHandler
         else if($exception instanceof DeleteDataFailedException){
             return DeleteDataFailedException::render($exception->getMessage()); //E-0025
         }
+        else if($exception instanceof SearchDataFailedException){
+            return SearchDataFailedException::render($exception->getMessage()); //E-0026
+        }
         else if ($exception instanceof ValidationException) 
         { 
             return response()->json(["error" => true,"code" => "E-0031","message" => $exception->errors()], 422);
