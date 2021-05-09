@@ -19,7 +19,7 @@ class CreateActivitiesTable extends Migration
             $table->float('default_value');
             $table->float('target');
             $table->boolean('can_change');
-            $table->bool('use_textfield');
+            $table->boolean('use_textfield');
             $table->softDeletes();
             $table->timestamps();
         });

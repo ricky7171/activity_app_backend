@@ -22,7 +22,7 @@ class ActivityFactory extends Factory
     public function definition()
     {
         $use_textfield = rand(0,1) == 1;
-        $default_value = 0
+        $default_value = 0;
         $target = 0;
         $can_change = true;
         if($use_textfield == false) { //if not use textfield
@@ -32,11 +32,11 @@ class ActivityFactory extends Factory
             $target = 10; //this is target count
         }
         return [
-            'title' => $this->faker->title;
-            'default_value' => $default_value;
-            'target' => $target;
-            'can_change' => $can_change;
-            'use_textfield' => $use_textfield;
+            'title' => $this->faker->title,
+            'default_value' => $default_value,
+            'target' => $target,
+            'can_change' => $can_change,
+            'use_textfield' => $use_textfield,
         ];
     }
 }
