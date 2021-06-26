@@ -73,6 +73,7 @@ class Handler extends ExceptionHandler
         }
         else
         {
+            dd($exception);
             if($message = $exception->getMessage()) {
                 return UnexpectedException::render("Unexpected Exception : " . $message); //E-0041
             } else {
