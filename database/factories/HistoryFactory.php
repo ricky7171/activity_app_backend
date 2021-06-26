@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\history;
+use App\Models\History;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
 
@@ -13,7 +13,7 @@ class HistoryFactory extends Factory
      *
      * @var string
      */
-    protected $model = history::class;
+    protected $model = History::class;
 
     /**
      * Define the model's default state.

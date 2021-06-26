@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\activity;
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ActivityFactory extends Factory
@@ -12,7 +12,7 @@ class ActivityFactory extends Factory
      *
      * @var string
      */
-    protected $model = activity::class;
+    protected $model = Activity::class;
 
     /**
      * Define the model's default state.
