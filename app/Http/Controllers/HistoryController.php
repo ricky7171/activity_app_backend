@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\History;
 use App\Http\Requests\StoreHistory;
+use App\Http\Requests\BulkStoreHistory;
 use App\Http\Requests\UpdateHistory;
 use App\Http\Requests\SearchHistory;
 use App\Services\Contracts\HistoryServiceContract as HistoryService;
@@ -13,6 +14,8 @@ use App\Exceptions\StoreDataFailedException;
 use App\Exceptions\UpdateDataFailedException;
 use App\Exceptions\DeleteDataFailedException;
 use App\Exceptions\SearchDataFailedException;
+use App\Exceptions\GetHistoryRangeFailedException;
+
 
 class HistoryController extends Controller
 {
@@ -54,6 +57,28 @@ class HistoryController extends Controller
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
+            dd($th);
+            throw new StoreDataFailedException('Store Data Failed : Undefined Error');
+        }
+        
+        
+    }
+
+    /**
+     * Store bulk history
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function bulkStore(BulkStoreHistory $request)
+    {
+        try {
+            $data = $request->validated();
+            $this->historyService->storeBulk($data);    
+            $response = ['error' => false, 'message'=>'create data success !'];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            return response()->json($th);
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
         }
         
@@ -109,4 +134,17 @@ class HistoryController extends Controller
             throw new SearchDataFailedException('Search Data Failed : Undefined Error');
         }
     }
+
+    public function getHistoryRange() {
+        try {
+            $result = $this->historyService->getHistoryRange();
+            $response = ['error' => false, 'data' => $result];
+            return response()->json($response);
+        } catch (\Throwsable $th) {
+            dd($th);
+            throw new GetHistoryRangeFailedException('Get History Range Failed : Undefined Error');
+        }
+    }
+
+    
 }

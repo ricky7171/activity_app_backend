@@ -13,7 +13,7 @@ class history extends Model
     
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ["activity_id", "date", "time", "value"];
+    protected $fillable = ["activity_id", "date", "time", "value", "value_textfield"];
 
     public function activity() {
         return $this->belongsTo(Activity::class);

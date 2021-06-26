@@ -19,4 +19,10 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
         })->get();
         return $result;
     }
+
+    public function getUsingMonthYear($month, $year) {
+        return Activity::with(['histories' => function($query) use ($month, $year) {
+            $query->whereYear("date", $year)->whereMonth("date", $month);
+        }])->get();
+    }
 }

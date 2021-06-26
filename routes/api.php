@@ -20,7 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/activities/search', 'ActivityController@search');
 
+Route::get('/activities/getUsingMonthYear/{month}/{year}', 'ActivityController@getUsingMonthYear');
+
 Route::post('/histories/search', 'HistoryController@search');
+
+Route::get('/histories/getHistoryRange', 'HistoryController@getHistoryRange');
+
+Route::post('/histories/bulkStore', 'HistoryController@bulkStore');
+
 
 Route::resource('activities', 'ActivityController')->except([
     'create', 'show'

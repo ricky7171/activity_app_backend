@@ -16,6 +16,6 @@ class activity extends Model
     protected $fillable = ['title', 'default_value', 'target', 'can_change', 'use_textfield'];
 
     public function histories() {
-        $this->hasMany(History::class);
+        return $this->hasMany(History::class);
     }
 }

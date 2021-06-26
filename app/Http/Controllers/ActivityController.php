@@ -33,6 +33,7 @@ class ActivityController extends Controller
             $response = ['error' => false, 'data'=>$data];
             return response()->json($response);
         } catch (\Throwable $th) {
+            return $th;
             throw new GetDataFailedException('Get Data Failed : Undefined Error');
         }
         
@@ -106,4 +107,16 @@ class ActivityController extends Controller
             throw new SearchDataFailedException('Search Data Failed : Undefined Error');
         }
     }
+
+    public function getUsingMonthYear($month, $year) {
+        try {
+            $result = $this->activityService->getUsingMonthYear($month, $year);
+            $response = ['error' => false, 'data' => $result];
+            return response()->json($response);
+        } catch (\Throwsable $th) {
+            dd($th);
+            throw new GetHistoryRangeFailedException('Get History Range Failed : Undefined Error');
+        }
+    }
+
 }

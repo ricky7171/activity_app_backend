@@ -12,5 +12,7 @@ interface ActivityServiceContract {
     public function delete($id);
 
     public function search($fields);
+
+    public function getUsingMonthYear($month, $year);
     
 }

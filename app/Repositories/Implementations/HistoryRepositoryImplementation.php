@@ -4,6 +4,7 @@ namespace App\Repositories\Implementations;
 
 use App\Repositories\Contracts\HistoryRepositoryContract;
 use App\Models\History;
+use App\Models\Activity;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -30,4 +31,22 @@ class HistoryRepositoryImplementation extends BaseRepositoryImplementation imple
           
         return $result;
     }
+
+    public function getHistoryRange() {
+        // $result = DB::table('histories')->get();
+        // return $result;
+        $result = DB::table('histories')->select(DB::raw("DATE_FORMAT(histories.date, '%m-%Y') as historyDate"),  DB::raw('YEAR(histories.date) year, MONTH(histories.date) month'))
+        ->where('deleted_at', null)
+        ->groupby('year','month', 'historyDate')
+        ->get();
+        return $result;
+    }
+
+    public function storeBulk($histories) {
+        
+        $newData = $this->builder->insert($histories);
+        return $newData;
+    }
+
+    
 }

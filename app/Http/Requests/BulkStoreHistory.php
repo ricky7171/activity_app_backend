@@ -5,7 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class StoreHistory extends FormRequest
+
+class BulkStoreHistory extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +27,14 @@ class StoreHistory extends FormRequest
     {
         return [
             'activity_id' => 'required|integer|exists:activities,id',
-            'date' => 'required|date_format:Y-m-d',
-            'time' => 'required|date_format:H:i:s',
-            'value' => 'required_without:value_textfield|numeric',
-            'value_textfield' => 'string',
+            'history.*.date' => 'required|date_format:Y-m-d',
+            'history.*.time' => 'required|date_format:H:i:s',
+            'history.*.value' => 'required_without:history.*.value_textfield|numeric',
+            'history.*.value_textfield' => 'string',
         ];
     }
 
-    // protected function failedValidation(Validator $validator) {
-    //     dd($validator->errors());
-    // }
-
-
+    protected function failedValidation(Validator $validator) {
+        dd($validator->errors());
+    }
 }

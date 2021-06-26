@@ -40,31 +40,6 @@ class Handler extends ExceptionHandler
     }
 
     public function render($request, Throwable $exception) {
-        // if($exception instanceof LoginFailedException){
-        //     return LoginFailedException::render($exception->getMessage()); //E-0001
-        // }
-        // else if ($exception instanceof TokenInvalidException) {
-        //     return response()->json(['error' => true,'code' => 'E-0002', 'message' => ["token"=>["Token is Invalid !"]]],400);
-        // }
-        // elseif ($exception instanceof TokenExpiredException) {
-        //     return response()->json(['error' => true,'code' => 'E-0002', 'message' => ["token"=>["Token is Expired !"]]],400);
-        // }
-        // elseif ($exception instanceof TokenBlacklistedException) {
-        //     return response()->json(['error' => true,'code' => 'E-0002', 'message' => ["token"=>['Token is Blacklist !']]],400);
-        // }
-        // else if ($exception instanceof JWTException) {
-        //     return response()->json(['error' => true,'code' => 'E-0002', 'message' => ["Error in Authentication !"]],400);
-        // }
-        // else if ($exception->getMessage() === 'Token not provided') {
-        //     return response()->json(['error' => true,'code' => 'E-0002', 'message' => ["token"=>['Token not provided !']]], 400);
-        // }
-        // elseif ($exception->getMessage() === 'User not found'){
-        //     return response()->json(['error' => true,'code' => 'E-0002', 'message' => ["user"=>['User not found !']]], 400);
-        // }
-        // else if($exception instanceof LogoutFailedException){
-        //     return LogoutFailedException::render($exception->getMessage()); //E-0003
-        // }
-        
         if($exception instanceof GetDataFailedException){
             return GetDataFailedException::render($exception->getMessage()); //E-0021
         }
@@ -82,6 +57,9 @@ class Handler extends ExceptionHandler
         }
         else if($exception instanceof SearchDataFailedException){
             return SearchDataFailedException::render($exception->getMessage()); //E-0026
+        }
+        else if($exception instanceof GetHistoryRangeFailedException){
+            return GetHistoryRangeFailedException::render($exception->getMessage()); //E-0026
         }
         else if ($exception instanceof ValidationException) 
         { 

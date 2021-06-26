@@ -23,7 +23,7 @@ class HistoryFactory extends Factory
     public function definition()
     {
         return [
-            'activity_id' => mt_rand(0,3),
+            'activity_id' => mt_rand(1,3),
             'date' => $this->faker->date("Y-m-d", 'now'),
             'time' => $this->faker->date("H:i:s", 'now'),
             'value' => mt_rand(50,100)

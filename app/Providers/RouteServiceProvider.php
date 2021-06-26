@@ -47,6 +47,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        Route::pattern('month', '^(0?[1-9]|1[012])$');
+        Route::pattern('year', '^\d{4}$');
     }
 
     /**
