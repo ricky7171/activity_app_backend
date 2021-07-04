@@ -18,4 +18,10 @@ class Activity extends Model
     public function histories() {
         return $this->hasMany(History::class);
     }
+
+    public function delete()
+    {   
+        foreach($this->histories as $history) { $history->delete(); }
+        return parent::delete();
+    }
 }
