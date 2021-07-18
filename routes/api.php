@@ -36,3 +36,6 @@ Route::resource('activities', 'ActivityController')->except([
 Route::resource('histories', 'HistoryController')->except([
     'create', 'show'
 ]);
+
+Route::get('/setting', 'SettingController@index');
+Route::post('/setting', 'SettingController@save');

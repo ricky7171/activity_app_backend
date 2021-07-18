@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         $models = [
             'Activity',
             'History',
+            'Setting',
         ];
 
         //binding repository

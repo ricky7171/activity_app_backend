@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ActivitySeeder::class);
         $this->call(HistorySeeder::class);
+        $this->call(SettingSeeder::class);
     }
 }
