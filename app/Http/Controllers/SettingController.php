@@ -25,6 +25,7 @@ class SettingController extends Controller
             $response = ['error' => false, 'data'=>$data];
             return response()->json($response);
         } catch (\Throwable $th) {
+            throw $th;
             throw new GetDataFailedException('Get Data Failed : Undefined Error');
         }
     }

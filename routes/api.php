@@ -22,6 +22,8 @@ Route::post('/activities/search', 'ActivityController@search');
 
 Route::get('/activities/getUsingMonthYear/{month}/{year}', 'ActivityController@getUsingMonthYear');
 
+Route::post('/activities/changeposition', 'ActivityController@changePosition');
+
 Route::post('/histories/search', 'HistoryController@search');
 
 Route::get('/histories/getHistoryRange', 'HistoryController@getHistoryRange');

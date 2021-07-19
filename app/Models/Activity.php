@@ -24,4 +24,12 @@ class Activity extends Model
         foreach($this->histories as $history) { $history->delete(); }
         return parent::delete();
     }
+
+    public static function booted()
+    {
+        static::creating(function($model){
+            $lastposition = self::get()->pluck('position')->first() ?? 0;
+            $model->position = $lastposition+1;
+        });
+    }
 }

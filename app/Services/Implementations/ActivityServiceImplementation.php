@@ -35,4 +35,8 @@ class ActivityServiceImplementation implements ActivityServiceContract {
     public function getUsingMonthYear($month, $year) {
         return $this->activityRepo->getUsingMonthYear($month, $year);
     }
+
+    public function changePosition($id, $new_position) {
+        return $this->activityRepo->changePosition($id, $new_position);
+    }
 }

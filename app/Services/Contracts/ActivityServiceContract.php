@@ -14,5 +14,7 @@ interface ActivityServiceContract {
     public function search($fields);
 
     public function getUsingMonthYear($month, $year);
+
+    public function changePosition($id, $new_position);
     
 }

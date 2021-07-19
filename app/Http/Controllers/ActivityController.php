@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Http\Requests\StoreActivity;
 use App\Http\Requests\UpdateActivity;
 use App\Http\Requests\SearchActivity;
+use App\Http\Requests\ChangePositionActivity;
 use App\Services\Contracts\ActivityServiceContract as ActivityService;
 use App\Exceptions\GetDataFailedException;
 use App\Exceptions\StoreDataFailedException;
@@ -119,4 +120,15 @@ class ActivityController extends Controller
         }
     }
 
+    public function changePosition(ChangePositionActivity $request) {
+        try {
+            $data = $request->validated();
+            $result = $this->activityService->changePosition($request->id, $request->position);
+            $response = ['error' => false, 'data'=> $result];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw $th;
+            throw new UpdateDataFailedException('Update Data Failed : Undefined Error');
+        }
+    }
 }
