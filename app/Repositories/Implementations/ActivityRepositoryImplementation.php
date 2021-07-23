@@ -26,9 +26,11 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
         }])->get();
     }
 
-    public function changePosition($id, $new_position) {
-        $activity = Activity::find($id);
-        $activity->position = $new_position;
-        $activity->save();
+    public function changePosition($new_position) {
+        foreach($new_position as $position => $id) {
+            $activity = Activity::find($id);
+            $activity->position = $position;
+            $activity->save();
+        }
     }
 }

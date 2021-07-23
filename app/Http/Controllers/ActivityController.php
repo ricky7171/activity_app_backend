@@ -54,6 +54,7 @@ class ActivityController extends Controller
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
+            throw $th;
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
         }
         
@@ -120,10 +121,10 @@ class ActivityController extends Controller
         }
     }
 
-    public function changePosition(ChangePositionActivity $request) {
+    public function updatePosition(ChangePositionActivity $request) {
         try {
             $data = $request->validated();
-            $result = $this->activityService->changePosition($request->id, $request->position);
+            $result = $this->activityService->changePosition($request->position);
             $response = ['error' => false, 'data'=> $result];
             return response()->json($response);
         } catch (\Throwable $th) {

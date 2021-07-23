@@ -29,6 +29,7 @@ class UpdateActivity extends FormRequest
             'target' => 'numeric',
             'can_change' => 'boolean',
             'use_textfield' => 'boolean',
+            'color' => 'string',
         ];
     }
 }

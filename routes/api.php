@@ -22,7 +22,7 @@ Route::post('/activities/search', 'ActivityController@search');
 
 Route::get('/activities/getUsingMonthYear/{month}/{year}', 'ActivityController@getUsingMonthYear');
 
-Route::post('/activities/changeposition', 'ActivityController@changePosition');
+Route::patch('/activities/updatePosition', 'ActivityController@updatePosition');
 
 Route::post('/histories/search', 'HistoryController@search');
 

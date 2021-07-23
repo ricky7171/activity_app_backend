@@ -24,8 +24,7 @@ class ChangePositionActivity extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:activities',
-            'position' => 'required|numeric'
+            'position' => 'required|array'
         ];
     }
 }
