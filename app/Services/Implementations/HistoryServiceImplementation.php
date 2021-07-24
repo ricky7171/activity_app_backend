@@ -65,7 +65,16 @@ class HistoryServiceImplementation implements HistoryServiceContract {
 
     public function getHistoryRange() {
         $dataRange = $this->historyRepo->getHistoryRange();
-        $result = $dataRange->groupBy('year');
+        $result = [];
+        $groupByYear = $dataRange->groupBy('year');
+
+        foreach($groupByYear as $year => $range) {
+            $result[] = [
+                'year' => $year,
+                'range'=> $range       
+            ];
+        }
+
         return $result;
     }
 
