@@ -38,6 +38,8 @@ class HistoryRepositoryImplementation extends BaseRepositoryImplementation imple
         $result = DB::table('histories')->select(DB::raw("DATE_FORMAT(histories.date, '%m-%Y') as historyDate"),  DB::raw('YEAR(histories.date) year, MONTH(histories.date) month'))
         ->where('deleted_at', null)
         ->groupby('year','month', 'historyDate')
+        ->orderBy(DB::raw("YEAR(histories.date)"), 'DESC')
+        ->orderBy(DB::raw("MONTH(histories.date)"), 'DESC')
         ->get();
         return $result;
     }

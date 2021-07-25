@@ -29,6 +29,7 @@ class StoreActivity extends FormRequest
             'target' => 'required|numeric',
             'can_change' => 'required|boolean',
             'use_textfield' => 'required|boolean',
+            'color' => 'required|string',
         ];
     }
 }

@@ -25,4 +25,12 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
             $query->whereYear("date", $year)->whereMonth("date", $month);
         }])->get();
     }
+
+    public function changePosition($new_position) {
+        foreach($new_position as $position => $id) {
+            $activity = Activity::find($id);
+            $activity->position = $position;
+            $activity->save();
+        }
+    }
 }

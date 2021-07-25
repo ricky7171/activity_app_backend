@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateActivity extends FormRequest
+class SaveSetting extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,8 @@ class UpdateActivity extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string',
-            'default_value' => 'numeric',
-            'target' => 'numeric',
-            'can_change' => 'boolean',
-            'use_textfield' => 'boolean',
-            'color' => 'string',
+            'key' => 'required',
+            'value' => 'required'
         ];
     }
 }

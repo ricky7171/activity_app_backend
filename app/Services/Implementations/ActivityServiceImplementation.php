@@ -13,6 +13,9 @@ class ActivityServiceImplementation implements ActivityServiceContract {
     }
 
     public function get() {
+        if(request()->has('sortbyposition')) {
+            return $this->activityRepo->allOrder('position', 'asc');
+        }
         return $this->activityRepo->allOrder('id', 'desc');
     }
 
@@ -34,5 +37,9 @@ class ActivityServiceImplementation implements ActivityServiceContract {
 
     public function getUsingMonthYear($month, $year) {
         return $this->activityRepo->getUsingMonthYear($month, $year);
+    }
+
+    public function changePosition($new_position) {
+        return $this->activityRepo->changePosition($new_position);
     }
 }

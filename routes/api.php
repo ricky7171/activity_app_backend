@@ -22,6 +22,8 @@ Route::post('/activities/search', 'ActivityController@search');
 
 Route::get('/activities/getUsingMonthYear/{month}/{year}', 'ActivityController@getUsingMonthYear');
 
+Route::patch('/activities/updatePosition', 'ActivityController@updatePosition');
+
 Route::post('/histories/search', 'HistoryController@search');
 
 Route::get('/histories/getHistoryRange', 'HistoryController@getHistoryRange');
@@ -36,3 +38,6 @@ Route::resource('activities', 'ActivityController')->except([
 Route::resource('histories', 'HistoryController')->except([
     'create', 'show'
 ]);
+
+Route::get('/setting', 'SettingController@index');
+Route::post('/setting', 'SettingController@save');
