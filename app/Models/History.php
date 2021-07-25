@@ -18,4 +18,17 @@ class History extends Model
     public function activity() {
         return $this->belongsTo(Activity::class);
     }
+
+    protected static function booted()
+    {
+        static::creating(function($model) {
+            if(!$model->time) {
+                $model->time = now()->format('H:i:s');
+            }
+
+            if(!$model->date) {
+                $model->date = now()->format('Y-m-d');
+            }
+        });
+    }
 }
