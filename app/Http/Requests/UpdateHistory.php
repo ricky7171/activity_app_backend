@@ -28,6 +28,7 @@ class UpdateHistory extends FormRequest
             'date' => 'date_format:Y-m-d',
             'time' => 'date_format:H:i:s',
             'value' => 'numeric',
+            'value_textfield' => 'string',
         ];
     }
 }
