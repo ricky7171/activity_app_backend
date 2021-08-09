@@ -14,13 +14,15 @@ class HistoryServiceImplementation implements HistoryServiceContract {
     }
 
     public function get() {
-        $data = $this->historyRepo->datatableWith(['activity:id,title'])
+        $data = $this->historyRepo->datatableWith(['activity:id,title,can_change'])
             ->orderBy('id', 'desc')->get();
         $data = collect($data)->map(function ($item) {
             if($item['activity'] == null) {
                 $item = Arr::add($item, 'activity_title', "deleted activity");
+                $item = Arr::add($item, 'activity_can_change', 0);
             } else {
                 $item = Arr::add($item, 'activity_title', $item['activity']['title']);
+                $item = Arr::add($item, 'activity_can_change', $item['activity']['can_change']);
             }
             return Arr::except($item, ['activity']);
         });
