@@ -39,5 +39,9 @@ Route::resource('histories', 'HistoryController')->except([
     'create', 'show'
 ]);
 
+Route::resource('application_logs', 'ApplicationLogController')->except([
+    'create', 'show'
+]);
+
 Route::get('/setting', 'SettingController@index');
 Route::post('/setting', 'SettingController@save');
