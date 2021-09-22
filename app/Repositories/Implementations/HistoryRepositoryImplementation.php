@@ -45,9 +45,14 @@ class HistoryRepositoryImplementation extends BaseRepositoryImplementation imple
     }
 
     public function storeBulk($histories) {
-        
         $newData = $this->builder->insert($histories);
         return $newData;
+    }
+
+    public function deleteBulk($historyIds) {
+        $this->find($historyIds)->each(function ($history, $key) {
+            $history->delete();
+        });
     }
 
     

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class StoreActivity extends FormRequest
 {
@@ -29,7 +30,12 @@ class StoreActivity extends FormRequest
             'target' => 'required|numeric',
             'can_change' => 'required|boolean',
             'use_textfield' => 'required|boolean',
+            'description' => 'required|string',
             'color' => 'required|string',
         ];
+    }
+
+    protected function failedValidation(Validator $validator) {
+        dd($validator->errors());
     }
 }

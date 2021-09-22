@@ -54,7 +54,7 @@ class ActivityController extends Controller
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
-            throw $th;
+            dd($th);
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
         }
         

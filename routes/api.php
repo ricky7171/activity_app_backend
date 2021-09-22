@@ -30,6 +30,8 @@ Route::get('/histories/getHistoryRange', 'HistoryController@getHistoryRange');
 
 Route::post('/histories/bulkStore', 'HistoryController@bulkStore');
 
+Route::post('/histories/bulkDelete', 'HistoryController@bulkDelete');
+
 
 Route::resource('activities', 'ActivityController')->except([
     'create', 'show'

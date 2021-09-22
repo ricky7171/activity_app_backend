@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\History;
 use App\Http\Requests\StoreHistory;
 use App\Http\Requests\BulkStoreHistory;
+use App\Http\Requests\BulkDeleteHistory;
 use App\Http\Requests\UpdateHistory;
 use App\Http\Requests\SearchHistory;
 use App\Services\Contracts\HistoryServiceContract as HistoryService;
@@ -81,8 +82,25 @@ class HistoryController extends Controller
             return response()->json($th);
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
         }
-        
-        
+    }
+
+    /**
+     * Delete bulk history
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function bulkDelete(BulkDeleteHistory $request)
+    {
+        try {
+            $data = $request->validated();
+            $this->historyService->deleteBulk($data);    
+            $response = ['error' => false, 'message'=>'delete data success !'];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+            throw new DeleteDataFailedException('Delete Data Failed : Undefined Error');
+        }
     }
 
     /**

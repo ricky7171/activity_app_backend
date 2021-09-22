@@ -10,4 +10,6 @@ interface HistoryRepositoryContract
 
     public function storeBulk($input);
 
+    public function deleteBulk($input);
+
 }

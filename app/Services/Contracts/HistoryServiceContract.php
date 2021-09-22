@@ -9,6 +9,8 @@ interface HistoryServiceContract {
 
     public function storeBulk($input);
 
+    public function deleteBulk($input);
+
     public function update($input, $id);
 
     public function delete($id);

@@ -51,6 +51,12 @@ class HistoryServiceImplementation implements HistoryServiceContract {
         return $this->historyRepo->storeBulk($histories);
     }
 
+    public function deleteBulk($input) {
+        $ids = $input['history']; //need change to histories
+        // dd($ids);
+        return $this->historyRepo->deleteBulk($ids);
+    }
+
     public function update($input, $id) {
         return $this->historyRepo->update($input, $id);
     }
