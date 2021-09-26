@@ -32,10 +32,4 @@ class StoreHistory extends FormRequest
             'value_textfield' => 'string',
         ];
     }
-
-    // protected function failedValidation(Validator $validator) {
-    //     dd($validator->errors());
-    // }
-
-
 }

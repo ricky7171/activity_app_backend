@@ -13,7 +13,7 @@ class Activity extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title', 'default_value', 'target', 'can_change', 'use_textfield', 'color'];
+    protected $fillable = ['type', 'title', 'default_value', 'target', 'can_change', 'use_textfield', 'color'];
 
     public function histories() {
         return $this->hasMany(History::class);

@@ -16,3 +16,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/test-timespeed', function() {
+    // format example : 1h 34m 33s 74ms
+    $split = explode(' ', request()->value);
+    $passes = null;
+
+    if(count($split) > 4) {
+        $passes = false;
+        dd('here');
+    } else if(!strpos('h', $split[0]) || 
+        !strpos('m', $split[1]) ||
+        !strpos('s', $split[2]) ||
+        !strpos('ms', $split[3])) {
+            $passes = false;
+    } else {
+        $passes= true;
+    }
+dd($passes);
+});

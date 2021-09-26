@@ -37,7 +37,7 @@ class HistoryController extends Controller
             $response = ['error' => false, 'data'=>$data];
             return response()->json($response);
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             throw new GetDataFailedException('Get Data Failed : Undefined Error');
         }
         
@@ -57,7 +57,7 @@ class HistoryController extends Controller
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
         }
         
@@ -78,6 +78,8 @@ class HistoryController extends Controller
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
+            dd('invalid given data');
+            throw $th;
             return response()->json($th);
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
         }
@@ -130,7 +132,7 @@ class HistoryController extends Controller
             $response = ['error' => false, 'data'=> $result];
             return response()->json($response);
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             throw new SearchDataFailedException('Search Data Failed : Undefined Error');
         }
     }
@@ -141,7 +143,7 @@ class HistoryController extends Controller
             $response = ['error' => false, 'data' => $result];
             return response()->json($response);
         } catch (\Throwsable $th) {
-            dd($th);
+            // dd($th);
             throw new GetHistoryRangeFailedException('Get History Range Failed : Undefined Error');
         }
     }

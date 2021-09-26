@@ -24,7 +24,7 @@ class BulkStoreHistory extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
         return [
             'activity_id' => 'required|integer|exists:activities,id',
             'history.*.date' => 'required|date_format:Y-m-d',
@@ -32,9 +32,5 @@ class BulkStoreHistory extends FormRequest
             'history.*.value' => 'required_without:history.*.value_textfield|numeric',
             'history.*.value_textfield' => 'string',
         ];
-    }
-
-    protected function failedValidation(Validator $validator) {
-        dd($validator->errors());
     }
 }

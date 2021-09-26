@@ -24,6 +24,7 @@ class UpdateActivity extends FormRequest
     public function rules()
     {
         return [
+            'type' => 'required|in:text,timespeed',
             'title' => 'string',
             'default_value' => 'numeric',
             'target' => 'numeric',

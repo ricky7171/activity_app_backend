@@ -116,7 +116,7 @@ class ActivityController extends Controller
             $response = ['error' => false, 'data' => $result];
             return response()->json($response);
         } catch (\Throwsable $th) {
-            dd($th);
+            // dd($th);
             throw new GetHistoryRangeFailedException('Get History Range Failed : Undefined Error');
         }
     }
