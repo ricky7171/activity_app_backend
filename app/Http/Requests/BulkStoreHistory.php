@@ -4,7 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-
+use App\Rules\SpeedrunRule;
+use App\Models\Activity;
 
 class BulkStoreHistory extends FormRequest
 {
@@ -25,12 +26,17 @@ class BulkStoreHistory extends FormRequest
      */
     public function rules()
     { 
+        $activity = Activity::find(request()->activity_id);
         return [
             'activity_id' => 'required|integer|exists:activities,id',
             'history.*.date' => 'required|date_format:Y-m-d',
-            'history.*.time' => 'required|date_format:H:i:s',
-            'history.*.value' => 'required_without:history.*.value_textfield|numeric',
-            'history.*.value_textfield' => 'string',
+            'history.*.time' => 'nullable|date_format:H:i:s',
+            'history.*.value' => [
+                'nullable',
+                'bail',
+                new SpeedrunRule($activity->type ?? null)
+            ],
+            // 'history.*.value_textfield' => 'string',
         ];
     }
 }

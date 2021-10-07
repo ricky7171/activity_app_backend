@@ -16,6 +16,10 @@ class Activity extends Model
     // protected $fillable = ['type', 'title', 'value', 'target', 'can_change', 'use_textfield', 'color'];
     protected $fillable = ['type', 'title', 'value', 'target', 'color', 'description', 'can_change'];
 
+    protected $appends = [
+        'speedrun_parsed'
+    ];
+
     public function histories() {
         return $this->hasMany(History::class);
     }
@@ -63,4 +67,28 @@ class Activity extends Model
     //         $model->position = $lastposition+1;
     //     });
     // }
+
+    public function getSpeedrunParsedAttribute()
+    {
+        if($this->type !== 'speedrun') return null;
+
+        $value = $this->value;
+        $split = explode(' ', $value);
+        $new_values = [];
+        $keyname = [
+            'h',
+            'm',
+            's',
+            'ms'
+        ];
+        
+        foreach($split as $i => $value) {
+            preg_match_all('!\d+!', $value, $matches);
+            $number = $matches[0][0] ?? null;
+
+            $new_values[$keyname[$i]] = (int) $number;
+        }
+
+        return $new_values;
+    }
 }
