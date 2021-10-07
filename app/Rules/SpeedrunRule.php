@@ -31,7 +31,7 @@ class SpeedrunRule implements Rule
             case 'value':
                 return is_numeric($value);
             case 'speedrun':
-                // format example : 1h 34m 33s 74ms
+                // format example : 1h 34m 33s 00ms
                 $split = explode(' ', $value);
 
                 if(count($split) != 4) {
@@ -72,7 +72,7 @@ class SpeedrunRule implements Rule
             case 'value':
                 return 'The value must be a number';
             case 'speedrun':
-                return 'Time as speed target must be in the format: 1h 34m 33s 74ms';
+                return 'Time as speed target must be in the format: 1h 34m 33s 00ms';
         }
     }
 }

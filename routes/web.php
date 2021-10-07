@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test-timespeed', function() {
-    // format example : 1h 34m 33s 74ms
+    // format example : 1h 34m 33s 00ms
     $split = explode(' ', request()->value);
     $passes = null;
 

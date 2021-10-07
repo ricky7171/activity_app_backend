@@ -33,7 +33,7 @@ class Activity extends Model
     /**
      * Pase speedrun value to HH:MM:SS
      *
-     * @param string $value ex: 1h 34m 33s 74ms
+     * @param string $value ex: 1h 34m 33s 00ms
      * @return void
      */
     public static function convertSpeedrunValueToTimestamp($value)
