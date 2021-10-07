@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeTimeToNullableOnHistories extends Migration
+class AddDescriptionActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeTimeToNullableOnHistories extends Migration
      */
     public function up()
     {
-        Schema::table('histories', function (Blueprint $table) {
-            $table->time('time')->nullable()->change();
+        Schema::table('activities', function(Blueprint $table){
+            $table->string('description')->nullable()->after('title');
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeTimeToNullableOnHistories extends Migration
      */
     public function down()
     {
-        Schema::table('histories', function (Blueprint $table) {
-            //
+        Schema::table('activities', function(Blueprint $table){
+            $table->dropColumn('description');
         });
     }
 }

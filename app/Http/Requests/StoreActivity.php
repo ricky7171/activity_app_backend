@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\TimeSpeedRule;
+use App\Rules\SpeedrunRule;
 
 class StoreActivity extends FormRequest
 {
@@ -25,15 +25,16 @@ class StoreActivity extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:text,timespeed',
+            'type' => 'required|in:value,count,speedrun',
             'title' => 'required|string',
-            'default_value' => 'required|numeric',
-            'target' => [
-                'required',
-                new TimeSpeedRule(request()->type),
+            'description' => 'nullable|string',
+            'value' => [
+                'required_if:type,value,speedrun',
+                new SpeedrunRule(request()->type)
             ],
-            'can_change' => 'required|boolean',
-            'use_textfield' => 'required|boolean',
+            'target' => 'required|numeric',
+            'can_change' => 'required_if:type,value|boolean',
+            // 'use_textfield' => 'required|boolean',
             'color' => 'required|string',
         ];
     }

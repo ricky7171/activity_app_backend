@@ -8,6 +8,7 @@ use App\Http\Requests\StoreHistory;
 use App\Http\Requests\BulkStoreHistory;
 use App\Http\Requests\UpdateHistory;
 use App\Http\Requests\SearchHistory;
+use App\Http\Requests\SearchHistoryRange;
 use App\Services\Contracts\HistoryServiceContract as HistoryService;
 use App\Exceptions\GetDataFailedException;
 use App\Exceptions\StoreDataFailedException;
@@ -78,7 +79,6 @@ class HistoryController extends Controller
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
-            dd('invalid given data');
             throw $th;
             return response()->json($th);
             throw new StoreDataFailedException('Store Data Failed : Undefined Error');
@@ -137,9 +137,9 @@ class HistoryController extends Controller
         }
     }
 
-    public function getHistoryRange() {
+    public function getHistoryRange(SearchHistoryRange $request) {
         try {
-            $result = $this->historyService->getHistoryRange();
+            $result = $this->historyService->getHistoryRange($request->all());
             $response = ['error' => false, 'data' => $result];
             return response()->json($response);
         } catch (\Throwsable $th) {

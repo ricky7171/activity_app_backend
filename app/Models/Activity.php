@@ -13,7 +13,8 @@ class Activity extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['type', 'title', 'default_value', 'target', 'can_change', 'use_textfield', 'color'];
+    // protected $fillable = ['type', 'title', 'value', 'target', 'can_change', 'use_textfield', 'color'];
+    protected $fillable = ['type', 'title', 'value', 'target', 'color', 'description', 'can_change'];
 
     public function histories() {
         return $this->hasMany(History::class);
@@ -25,6 +26,36 @@ class Activity extends Model
         return parent::delete();
     }
 
+    /**
+     * Pase speedrun value to HH:MM:SS
+     *
+     * @param string $value ex: 1h 34m 33s 74ms
+     * @return void
+     */
+    public static function convertSpeedrunValueToTimestamp($value)
+    {
+        $split = explode(' ', $value);
+        $array_times = [];
+        
+        foreach($split as $i => $value) {
+            preg_match_all('!\d+!', $value, $matches);
+            $number = $matches[0][0] ?? null;
+
+            array_push($array_times, $number);
+        }
+
+        $formatted = "{$array_times[0]}:{$array_times[1]}:{$array_times[2]}.{$array_times[3]}";
+        $timestamps = strtotime($formatted);
+        return $timestamps;
+    }
+
+    public static function convertTimestampToSpeedrunValue($value)
+    {
+        $date = \Carbon\Carbon::createFromTimestamp($value)->format('H\h i\m s\s');
+
+        return $date;
+    }
+    
     // public static function booted()
     // {
     //     static::creating(function($model){
