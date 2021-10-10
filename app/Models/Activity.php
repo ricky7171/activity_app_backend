@@ -17,7 +17,8 @@ class Activity extends Model
     protected $fillable = ['type', 'title', 'value', 'target', 'color', 'description', 'can_change'];
 
     protected $appends = [
-        'speedrun_parsed'
+        'speedrun_parsed',
+        'target'
     ];
 
     public function histories() {
@@ -90,5 +91,10 @@ class Activity extends Model
         }
 
         return $new_values;
+    }
+
+    public function getTargetAttribute($value)
+    {
+        return (int) $value;
     }
 }

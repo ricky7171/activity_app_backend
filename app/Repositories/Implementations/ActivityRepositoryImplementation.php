@@ -69,9 +69,12 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
                 $histories = $activity->histories;
                 if(count($histories)) {
                     $timestamps = $histories->map(function($history){
-                        return Activity::convertSpeedrunValueToTimestamp($history->value);
+                        return [
+                            'timestamp' => Activity::convertSpeedrunValueToTimestamp($history->value),
+                            'value' => $history->value
+                        ];
                     });
-                    $avg = $timestamps->avg();
+                    $avg = $timestamps->avg('timestamp');
                     $score = Activity::convertTimestampToSpeedrunValue($avg);
 
 
@@ -79,11 +82,16 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
                     $speedtarget_timestamp = Activity::convertSpeedrunValueToTimestamp($speedtarget);
 
                     $is_red = $avg > $speedtarget_timestamp;
-                    $data['best_time'] = Activity::convertTimestampToSpeedrunValue($timestamps->min());
+                    $fastest_time = $timestamps->min('timestamp');
+
+                    $best_time = $timestamps->filter(function($t) use($fastest_time) {
+                        return $t['timestamp'] == $fastest_time;
+                    })->first();
+                    $data['best_time'] = $best_time['value'];
                 } else {
-                    $score = '00h 00m 00s';
+                    $score = '0h 0m 0s';
                     $is_red = false;
-                    $data['best_time'] = $score;
+                    $data['best_time'] = $score . ' 0ms';
 
                 }
                 $data['title'] .= " ({$activity->value})";
