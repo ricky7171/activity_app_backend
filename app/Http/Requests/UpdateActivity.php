@@ -25,14 +25,14 @@ class UpdateActivity extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:value,count,speedrun',
+            'type' => 'required|in:value,count,speedrun,alarm',
             'description' => 'nullable|string',
             'title' => 'required|string',
             'value' => [
                 'required',
                 new SpeedrunRule(request()->type)
             ],
-            'target' => 'required|numeric',
+            'target' => 'required_unless:type,alarm|numeric',
             'can_change' => 'boolean',
             // 'use_textfield' => 'boolean',
             'color' => 'string',

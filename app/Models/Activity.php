@@ -95,6 +95,10 @@ class Activity extends Model
 
     public function getTargetAttribute($value)
     {
+        if(is_null($value)) {
+            return null;
+        }
+        
         return (int) $value;
     }
 }

@@ -25,14 +25,14 @@ class StoreActivity extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:value,count,speedrun',
+            'type' => 'required|in:value,count,speedrun,alarm',
             'title' => 'required|string',
             'description' => 'nullable|string',
             'value' => [
                 'required_if:type,value,speedrun',
                 new SpeedrunRule(request()->type)
             ],
-            'target' => 'required|numeric',
+            'target' => 'required_unless:type,alarm|numeric',
             'can_change' => 'required_if:type,value|boolean',
             // 'use_textfield' => 'required|boolean',
             'color' => 'required|string',

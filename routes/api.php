@@ -41,3 +41,7 @@ Route::resource('histories', 'HistoryController')->except([
 
 Route::get('/setting', 'SettingController@index');
 Route::post('/setting', 'SettingController@save');
+
+Route::resource('categories', 'CategoryController')->except([
+    'create', 'show'
+]);

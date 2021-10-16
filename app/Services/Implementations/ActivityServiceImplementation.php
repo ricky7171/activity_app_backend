@@ -23,13 +23,10 @@ class ActivityServiceImplementation implements ActivityServiceContract {
         $can_change = 0;
         $use_textfield = 0;
 
-        if($input['type'] == 'count') {
+        if(in_array($input['type'], ['count', 'speedrun'])) {
             $can_change = 1;
             $use_textfield = 1;
-        } else if($input['type'] == 'speedrun') {
-            $can_change = 1;
-            $use_textfield = 1;
-        } else {
+        } else if($input['type'] == 'value') {
             $can_change = $input['can_change'];
         }
 
