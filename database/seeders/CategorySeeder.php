@@ -14,6 +14,20 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+        $media_category = [
+            'Nature',
+            'People',
+            'Car',
+            'Sports',
+        ];
+
+        foreach($media_category as $category) {
+            Category::updateOrCreate([
+                'type' => 'media-gallery',
+                'name' => $category
+            ]);
+        }
+        
         $alarm_category = [
             'Important',
             'Paying',

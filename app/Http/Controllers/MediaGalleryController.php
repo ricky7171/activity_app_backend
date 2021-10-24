@@ -3,34 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Requests\StoreCategory;
-use App\Http\Requests\UpdateCategory;
-use App\Http\Requests\SearchCategory;
-use App\Services\Contracts\CategoryServiceContract as CategoryService;
+use App\Models\MediaGallery;
+use App\Http\Requests\StoreMediaGallery;
+use App\Http\Requests\UpdateMediaGallery;
+use App\Http\Requests\SearchMediaGallery;
+use App\Services\Contracts\MediaGalleryServiceContract as MediaGalleryService;
 use App\Exceptions\GetDataFailedException;
 use App\Exceptions\StoreDataFailedException;
 use App\Exceptions\UpdateDataFailedException;
 use App\Exceptions\SearchDataFailedException;
-use App\Exceptions\DeleteDataFailedException;
 
-class CategoryController extends Controller
+class MediaGalleryController extends Controller
 {
-    private $categoryService;
+    private $mediaGalleryService;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct(MediaGalleryService $mediaGalleryService)
     {
-        $this->categoryService = $categoryService;
+        $this->mediaGalleryService = $mediaGalleryService;
     }
     public function index(Request $request)
     {
         try {
-            $data = $this->categoryService->search($request->all());
+            $data = $this->mediaGalleryService->search($request->all());
             $response = ['error' => false, 'data'=>$data];
             return response()->json($response);
         } catch (\Throwable $th) {
@@ -46,11 +45,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategory $request)
+    public function store(StoreMediaGallery $request)
     {
         try {
             $data = $request->validated();
-            $this->categoryService->store($data);    
+            $this->mediaGalleryService->store($data);    
             $response = ['error' => false, 'message'=>'create data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
@@ -68,15 +67,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategory $request, Category $category)
+    public function update(UpdateMediaGallery $request, MediaGallery $activity)
     {
         try {
             $data = $request->validated();
-            $this->categoryService->update($data, $category->id);
+            $this->mediaGalleryService->update($data, $activity->id);
             $response = ['error' => false, 'message'=>'update data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
-            throw $th;
             throw new UpdateDataFailedException('Update Data Failed : Undefined Error');
         }
         
@@ -88,10 +86,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(MediaGallery $activity)
     {
         try {
-            $this->categoryService->delete($category->id);
+            $this->mediaGalleryService->delete($activity->id);
             $response = ['error' => false, 'message'=>'delete data success !'];
             return response()->json($response);
         } catch (\Throwable $th) {
@@ -100,10 +98,10 @@ class CategoryController extends Controller
         
     }
 
-    public function search(SearchCategory $request) {
+    public function search(SearchMediaGallery $request) {
         try {
             $data = $request->validated();
-            $result = $this->categoryService->search($data);
+            $result = $this->mediaGalleryService->search($data);
             $response = ['error' => false, 'data'=> $result];
             return response()->json($response);
         } catch (\Throwable $th) {

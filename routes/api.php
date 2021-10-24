@@ -45,3 +45,7 @@ Route::post('/setting', 'SettingController@save');
 Route::resource('categories', 'CategoryController')->except([
     'create', 'show'
 ]);
+
+Route::resource('media-galleries', 'MediaGalleryController')->except([
+    'create', 'show'
+]);

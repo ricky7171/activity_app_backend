@@ -74,11 +74,11 @@ class Handler extends ExceptionHandler
         }
         else
         {
-            if($message = $exception->getMessage()) {
-                return UnexpectedException::render("Unexpected Exception : " . $message); //E-0041
-            } else {
-                return UnexpectedException::render("Unexpected Exception : undefined message"); //E-0041
-            }
+            // if($message = $exception->getMessage()) {
+            //     return UnexpectedException::render("Unexpected Exception : " . $message); //E-0041
+            // } else {
+            //     return UnexpectedException::render("Unexpected Exception : undefined message"); //E-0041
+            // }
             
             //go to next request
             return parent::render($request, $exception);

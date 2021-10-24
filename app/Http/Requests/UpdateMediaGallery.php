@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategory extends FormRequest
+class UpdateMediaGallery extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class StoreCategory extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:alarm,media',
-            'name' => 'required',
+            'type' => 'required|in:image,video,link',
+            'category_id' => 'nullable|in:categories,id',
+            'image' => 'nullable|file',
+            'video' => 'nullable|file',
+            'link' => 'nullable|string',
         ];
     }
 }
