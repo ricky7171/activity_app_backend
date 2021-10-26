@@ -25,7 +25,7 @@ class StoreActivity extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:value,count,speedrun,alarm',
+            'type' => 'required|in:value,count,speedrun,alarm,badhabit',
             'title' => 'required|string',
             'description' => 'nullable|string',
             'value' => [
@@ -36,6 +36,8 @@ class StoreActivity extends FormRequest
             'can_change' => 'required_if:type,value|boolean',
             // 'use_textfield' => 'required|boolean',
             'color' => 'required|string',
+            'increase_value' => 'nullable|required_unless:count,speedrun|numeric|min:1',
+            'is_hide' => 'required|boolean',
         ];
     }
 }

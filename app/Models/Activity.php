@@ -14,13 +14,18 @@ class Activity extends Model
     protected $dates = ['deleted_at'];
 
     // protected $fillable = ['type', 'title', 'value', 'target', 'can_change', 'use_textfield', 'color'];
-    protected $fillable = ['type', 'title', 'value', 'target', 'color', 'description', 'can_change'];
+    protected $fillable = ['type', 'title', 'value', 'target', 'color', 'description', 'can_change', 'increase_value', 'is_hide'];
 
     protected $appends = [
         'speedrun_parsed',
-        'target'
+        'target',
+        'is_red',
     ];
 
+    protected $casts = [
+        'can_change' => 'integer',
+    ];
+    
     public function histories() {
         return $this->hasMany(History::class);
     }
@@ -93,12 +98,56 @@ class Activity extends Model
         return $new_values;
     }
 
-    public function getTargetAttribute($value)
+    public function getTargetAttribute()
     {
+        $value = $this->attributes['target'];
         if(is_null($value)) {
             return null;
         }
         
         return (int) $value;
+    }
+
+    public function getIsRedAttribute()
+    {
+        $activity = $this;
+        $is_red = $activity->score < $activity->target;
+
+        if($activity->type == 'speedrun') {
+            $histories = $activity->histories;
+            if(count($histories)) {
+                $timestamps = $histories->map(function($history){
+                    return [
+                        'timestamp' => Activity::convertSpeedrunValueToTimestamp($history->value),
+                        'value' => $history->value
+                    ];
+                });
+                $avg = $timestamps->avg('timestamp');
+                $score = Activity::convertTimestampToSpeedrunValue($avg);
+
+
+                $speedtarget = $activity->value;
+                $speedtarget_timestamp = Activity::convertSpeedrunValueToTimestamp($speedtarget);
+
+                $is_red = $avg > $speedtarget_timestamp;
+                $fastest_time = $timestamps->min('timestamp');
+
+                $best_time = $timestamps->filter(function($t) use($fastest_time) {
+                    return $t['timestamp'] == $fastest_time;
+                })->first();
+                $data['best_time'] = $best_time['value'];
+            } else {
+                $score = '0h 0m 0s';
+                $is_red = false;
+                $data['best_time'] = $score . ' 0ms';
+
+            }
+            // $left = $activity->target - $activity->count;
+
+        } else if($activity->type == 'badhabit') {
+            $is_red = $activity->score > $activity->target;
+        }
+
+        return $is_red;
     }
 }

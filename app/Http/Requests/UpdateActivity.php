@@ -25,17 +25,19 @@ class UpdateActivity extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:value,count,speedrun,alarm',
+            'type' => 'required|in:value,count,speedrun,alarm,badhabit',
             'description' => 'nullable|string',
             'title' => 'required|string',
             'value' => [
-                'required',
+                'required_if:type,value,speedrun',
                 new SpeedrunRule(request()->type)
             ],
             'target' => 'required_unless:type,alarm|numeric',
             'can_change' => 'boolean',
             // 'use_textfield' => 'boolean',
             'color' => 'string',
+            'increase_value' => 'nullable|required_unless:count,speedrun|numeric|min:1',
+            'is_hide' => 'required|boolean',
         ];
     }
 }

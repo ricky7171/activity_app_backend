@@ -12,6 +12,24 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
         $this->builder = $builder;
     }
 
+    public function allOrder($orderBy, $orderType)
+    {
+        $data = $this->builder->orderBy($orderBy, $orderType)->get();
+
+        $data = $data->map(function($activity){
+            $array = $activity->toArray();
+            if($activity->type == 'badhabit') {
+                $score = $activity->histories()->count();
+
+                $array['is_red'] = $score > $activity->target;
+            };
+
+            return $array;
+        });
+
+        return $data;
+    }
+    
     public function search($fields) {
         $result = \App\Models\Activity::orWhere(function($query) use ($fields) {
             foreach ($fields as $key => $value) {
@@ -28,7 +46,7 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
 
         $get_score_query = "
         CASE
-            WHEN activities.type = 'count' THEN COUNT(histories.id)
+            WHEN activities.type IN('count', 'badhabit') THEN COUNT(histories.id)
             WHEN activities.type = 'value' THEN SUM(histories.value)
         END as score
         ";
@@ -62,7 +80,7 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
                 'title' => $activity->title,
                 'target' => $activity->target,
                 'score' => $activity->score ?? 0,
-                'count' => $activity->count, 
+                'count' => $activity->count,
             ];
             
             if($activity->type == 'speedrun') {
@@ -98,6 +116,8 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
                 $data['score'] = $score;
                 $left = $activity->target - $activity->count;
 
+            } else if($activity->type == 'badhabit') {
+                $is_red = $activity->score > $activity->target;
             }
 
             $data['left'] = $left < 0 ? 0 : $left;
