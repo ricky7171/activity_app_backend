@@ -19,7 +19,7 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
         $data = $data->map(function($activity){
             $array = $activity->toArray();
             if($activity->type == 'badhabit') {
-                $score = $activity->histories()->count();
+                $score = $activity->histories()->sum('value');
 
                 $array['is_red'] = $score > $activity->target;
             };
@@ -46,8 +46,8 @@ class ActivityRepositoryImplementation extends BaseRepositoryImplementation impl
 
         $get_score_query = "
         CASE
-            WHEN activities.type IN('count', 'badhabit') THEN COUNT(histories.id)
-            WHEN activities.type = 'value' THEN SUM(histories.value)
+            WHEN activities.type IN('count') THEN COUNT(histories.id)
+            WHEN activities.type IN('value', 'badhabit') THEN SUM(histories.value)
         END as score
         ";
         

@@ -24,6 +24,8 @@ class Activity extends Model
 
     protected $casts = [
         'can_change' => 'integer',
+        'increase_value' => 'integer',
+        'is_hide' => 'integer',
     ];
     
     public function histories() {
