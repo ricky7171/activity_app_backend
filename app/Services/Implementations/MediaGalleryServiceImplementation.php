@@ -18,8 +18,13 @@ class MediaGalleryServiceImplementation implements MediaGalleryServiceContract {
     }
 
     public function store($input) {
+        $path = 'media-galleries/'.now()->format('Y-m');
+        $filename = now()->format('Ymd-Hi').'-'.$input['type'];
+        $fileid = uniqid(time());
+        
         if($input['type'] !== 'youtube') {
-            $input['value'] = $input['file']->store('media-galleries', 'public');
+            $name = $filename.'-'.$fileid.'.'.$input['file']->getClientOriginalExtension();
+            $input['value'] = $input['file']->storeAs($path, $name, 'public');
         }
         
         switch ($input['type']) {
@@ -32,7 +37,8 @@ class MediaGalleryServiceImplementation implements MediaGalleryServiceContract {
                 $input['thumbnail'] = "https://img.youtube.com/vi/{$youtube_id}/hqdefault.jpg";
                 break;
             case 'video':
-                $input['thumbnail'] = $input['thumbnail']->store('media-galleries', 'public');
+                $name = $filename.'-'.$fileid.'-thumb.'.($input['thumbnail']->getClientOriginalExtension() ?: 'jpg');
+                $input['thumbnail'] = $input['thumbnail']->storeAs($path, $name,'public');
                 break;
         }
         

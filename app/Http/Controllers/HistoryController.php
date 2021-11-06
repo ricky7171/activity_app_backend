@@ -148,5 +148,21 @@ class HistoryController extends Controller
         }
     }
 
-    
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'history' => 'required|array',
+        ]);
+
+        try {
+            foreach($request->history as $id) {
+                $this->historyService->delete($id);
+            }
+            $response = ['error' => false, 'message'=>'delete data success !'];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            throw new DeleteDataFailedException('Delete Data Failed : Undefined Error');
+        }
+        
+    }
 }

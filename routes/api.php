@@ -35,6 +35,7 @@ Route::resource('activities', 'ActivityController')->except([
     'create', 'show'
 ]);
 
+Route::post('/histories/bulkDelete', 'HistoryController@bulkDelete');
 Route::resource('histories', 'HistoryController')->except([
     'create', 'show'
 ]);
