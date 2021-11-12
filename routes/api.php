@@ -50,3 +50,7 @@ Route::resource('categories', 'CategoryController')->except([
 Route::resource('media-galleries', 'MediaGalleryController')->except([
     'create', 'show'
 ]);
+
+Route::resource('application-logs', 'ApplicationLogController')->except([
+    'create', 'show'
+]);

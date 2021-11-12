@@ -26,7 +26,7 @@ class StoreActivity extends FormRequest
     {
         return [
             'type' => 'required|in:value,count,speedrun,alarm,badhabit',
-            'title' => 'required|string',
+            'title' => 'required|string|unique:activities',
             'description' => 'nullable|string',
             'value' => [
                 'required_if:type,value,speedrun',

@@ -24,10 +24,11 @@ class UpdateActivity extends FormRequest
      */
     public function rules()
     {
+        $id = request()->segment(3);
         return [
             'type' => 'required|in:value,count,speedrun,alarm,badhabit',
             'description' => 'nullable|string',
-            'title' => 'required|string',
+            'title' => 'required|string|unique:activities,title,'.$id,
             'value' => [
                 'required_if:type,value,speedrun',
                 new SpeedrunRule(request()->type)
