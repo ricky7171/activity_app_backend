@@ -14,7 +14,7 @@ class AddColorOnActivitiesTable extends Migration
     public function up()
     {
         Schema::table('activities', function (Blueprint $table) {
-            $table->string('color')->nullable()->after('use_textfield');
+            $table->string('color')->nullable();
         });
     }
 

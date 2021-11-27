@@ -25,11 +25,11 @@ class SearchActivity extends FormRequest
     {
         return [
             'title' => 'string',
-            'default_value' => 'string',
+            'value' => 'string',
             'target' => 'string',
             'can_change' => 'string',
-            'use_textfield' => 'string',
-            'created_at'=> 'string',
+            // 'use_textfield' => 'string',
+            // 'created_at'=> 'string',
         ];
     }
 }
